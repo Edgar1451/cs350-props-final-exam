@@ -14,7 +14,10 @@
 
 {% block content %}
     
-    <p class="text-center"><a href="{% url 'transactions:add' %}" class="btn btn-sm btn-success">Add a new transaction</a></p>
+    <p class="text-center">
+        <a href="{% url 'transactions:add' %}" class="btn btn-sm btn-success">Add a new transaction</a> 
+        <a href="{% url 'transactions:search' %}" class="btn btn-sm btn-warning">Search Transactions</a>
+    </p>
     
     <hr>
 

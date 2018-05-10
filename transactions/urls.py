@@ -19,4 +19,6 @@ urlpatterns = [
 
 # E.g., http://localhost:8000/transactions/1/
     url(r'^(?P<pk>[0-9]+)/$', views.TransactionDetailView.as_view(), name='detail'),
+
+    url(r'^search/$', views.TransactionSearchView.as_view(), name='search'),
 ]

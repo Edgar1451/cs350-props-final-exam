@@ -6,6 +6,8 @@ from django.urls import reverse_lazy
 from django.views import generic
 
 from .models import Transaction
+from .forms import TransactionLookupForm
+
 from properties.models import Property
 
 
@@ -44,3 +46,29 @@ class TransactionUpdateView(generic.UpdateView):
     template_name = "transactions/edit.html"  # the page to display the form.
     fields = ['prop', 'trans_type',]
     success_url = reverse_lazy('properties:list')
+
+
+class TransactionSearchView(generic.FormView):
+    template_name = "transactions/search.html"
+    form_class = TransactionLookupForm
+
+    def get_context_data(self, **kwargs):
+        context = super(TransactionSearchView, self).get_context_data(**kwargs)
+        
+        # The GET query param might be null. Proceed silently to exception clause
+        try:
+            q = self.request.GET['search_query'] 
+            transactions = Transaction.objects.all()
+            results = []
+            for i in transactions:
+                if q in i.trans_type:
+                    results.append(i)
+            context['results'] = results
+            context['report'] = True   
+        except Exception as e:
+            
+            pass
+
+        
+        return context
+

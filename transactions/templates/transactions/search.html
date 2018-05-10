@@ -1,0 +1,37 @@
+<!-- transactions/search.html -->
+
+{% extends "core/base.html" %}
+{% load static %}
+
+
+{% block page_header %}
+<div class="row">
+    <div class="col">
+        <p>Search Transactions</p>
+    </div>
+</div>
+{% endblock page_header %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-4">
+        <form action="." method="get"> {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Search"/>
+        </form>
+    </div>
+    <div class="col-md-8">
+        {% if report %}
+            {% for transaction in results %}
+                <p>{{ transaction.prop }} - {{ transaction.trans_type }}</p>
+            {% empty %}
+                <p>No matching transactions found.</p>
+                <p><img src="{% static 'img/lava.jpg' %}" width="100%"></p>
+                
+            {% endfor %}
+        {% endif %}
+
+    </div>
+</div>
+
+{% endblock content %}
